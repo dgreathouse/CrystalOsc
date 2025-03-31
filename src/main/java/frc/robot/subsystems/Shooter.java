@@ -11,27 +11,43 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.k;
 
+
 public class Shooter extends SubsystemBase {
-  SparkMax m_shooterMotor = new SparkMax(k.CLIMBER.CLIMBER_MOTOR_CANID, MotorType.kBrushless);
-  SparkMaxConfig m_shooterMotorConfig = new SparkMaxConfig();
+  SparkMax m_shooterRightMotor = new SparkMax(k.SHOOTER.SHOOTER_RIGHT_MOTOR_CANID, MotorType.kBrushless);
+  SparkMax m_shooterLeftMotor = new SparkMax(k.SHOOTER.SHOOTER_LEFT_MOTOR_CANID, MotorType.kBrushless);
+  SparkMaxConfig m_shooterRightMotorConfig = new SparkMaxConfig();
+  SparkMaxConfig m_shooterLeftMotorConfig = new SparkMaxConfig();
+  double m_speed;
   /** Creates a new Intake. */
   public Shooter() {
-    m_shooterMotorConfig.inverted(false)
+    m_shooterRightMotorConfig.inverted(false)
     .idleMode(IdleMode.kBrake)
     .openLoopRampRate(0.0)
     .voltageCompensation(12.8);
-    m_shooterMotor.configure(m_shooterMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    m_shooterRightMotor.configure(m_shooterRightMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+    m_shooterLeftMotorConfig.follow(k.SHOOTER.SHOOTER_RIGHT_MOTOR_CANID)
+    .inverted(true)
+    .idleMode(IdleMode.kBrake)
+    .openLoopRampRate(0.0)
+    .voltageCompensation(12.8);
+    m_shooterLeftMotor.configure(m_shooterLeftMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Shooter/Voltage", m_speed);
   }
-
+  /**
+   * 
+   * @param _speed +/- 1.0 
+   */
   public void setSpeed(double _speed) {
-    m_shooterMotor.setVoltage(_speed * k.ROBOT.MAX_BATTERY_VOLTAGE);
+    m_speed = _speed * k.ROBOT.MAX_BATTERY_VOLTAGE;
+    m_shooterRightMotor.setVoltage(m_speed);
   }
 }

@@ -71,7 +71,7 @@ public class k {
 
     }
     public static class SHOOTER{
-        public static final int SHOOTER_MOTOR_CANID = 5;
-
+        public static final int SHOOTER_RIGHT_MOTOR_CANID = 5;
+        public static final int SHOOTER_LEFT_MOTOR_CANID = 5;
     }
 }
