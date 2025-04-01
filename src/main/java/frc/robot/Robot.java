@@ -11,9 +11,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commandGroups.Center;
 import frc.robot.commandGroups.DoNothing;
+import frc.robot.commandGroups.Left;
+import frc.robot.commandGroups.RIght;
 import frc.robot.commands.ClimberDefaultCommand;
 import frc.robot.commands.DrivetrainDefaultCommand;
 import frc.robot.commands.ShooterDefaultCommand;
@@ -45,6 +46,8 @@ public class Robot extends TimedRobot {
     k.ROBOT.shooter.setDefaultCommand(m_shooterDefaultCommand);
     m_autoChooser.setDefaultOption("Do Nothing", new DoNothing());
     m_autoChooser.addOption("Center", new Center());
+    m_autoChooser.addOption("Left", new Left());
+    m_autoChooser.addOption("Right", new RIght());
     SmartDashboard.putData(m_autoChooser);
 
     usbCamera_1.setResolution(120, 80);

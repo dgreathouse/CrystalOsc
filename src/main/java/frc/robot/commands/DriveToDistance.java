@@ -9,24 +9,29 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.lib.k;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class DriveToDistance extends Command {
-  double m_distance_in;
+  double m_distance_m;
   double m_speed;
-  double m_timeout;
+  double m_timeout_sec;
   PIDController m_rotatePID = new PIDController(0.1, 0, 0);
   PIDController m_drivePID = new PIDController(0.1, 0, 0);
   double m_initialAngle;
   
   Timer m_timer = new Timer();
 
-  /** Creates a new DriveToDistance. */
-  public DriveToDistance(double _distance_in, double _speed, double _timeout) {
+  /** Drive to a distance in meters at a certain speed. 
+   * If the distance is not reached the timeout in seconds will stop the command
+   * 
+   * @param _distance_m Distance in meters
+   * @param _speed +/- 1.0
+   * @param _timeout_sec Time in seconds to stop if distance not reached
+   */
+  public DriveToDistance(double _distance_m, double _speed, double _timeout_sec) {
 
     addRequirements(k.ROBOT.drive);
-    m_distance_in = _distance_in; // inches
+    m_distance_m = _distance_m; // inches
     m_speed = _speed; // 0.0 to 1.0, this is the max speed we will try to go
-    m_timeout = _timeout; // seconds, how long we will try to reach the target before timing out
+    m_timeout_sec = _timeout_sec; // seconds, how long we will try to reach the target before timing out
     
   }
 
@@ -49,7 +54,7 @@ public class DriveToDistance extends Command {
 
     double speed = m_speed;
     double distance = k.ROBOT.drive.getDistance();
-    speed = m_drivePID.calculate(distance, m_distance_in);
+    speed = m_drivePID.calculate(distance, m_distance_m);
     speed = rampUpValue(m_speed, .5); 
 
     k.ROBOT.drive.tankDrive(speed + rotate, speed - rotate);
@@ -68,7 +73,7 @@ public class DriveToDistance extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (m_timer.hasElapsed(m_timeout) || m_drivePID.atSetpoint()) {
+    if (m_timer.hasElapsed(m_timeout_sec) || m_drivePID.atSetpoint()) {
       k.ROBOT.drive.tankDrive(0, 0);
       return true;
     }

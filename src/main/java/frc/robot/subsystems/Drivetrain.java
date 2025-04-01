@@ -89,6 +89,7 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Drive/RightPos", getRightDistance());
     SmartDashboard.putData("Drive/Field", k.ROBOT.field2d);
     SmartDashboard.putNumber("Drive/Heading", getHeading());
+    SmartDashboard.putData("Drive/DifferentialDrive", m_robotDrive);
    
   }
   public double getDistance(){

@@ -5,21 +5,15 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.DriveRotate;
-import frc.robot.commands.DriveToDistance;
-import frc.robot.commands.IntakeSpin;
 
-
-public class Center extends SequentialCommandGroup {
-  /** Creates a new Center. */
-  public Center() {
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class RIght extends SequentialCommandGroup {
+  /** Creates a new RIght. */
+  public RIght() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-      new DriveToDistance(1, .5, 2),
-      new IntakeSpin(.5, 2),
-      new DriveToDistance(-.5, .5, 2),
-      new DriveRotate(45, .5, 1)
-    );
+    addCommands();
   }
 }
