@@ -24,13 +24,14 @@ public class Shooter extends SubsystemBase {
   double m_speed;
   /** Creates a new Intake. */
   public Shooter() {
-    m_shooterRightMotorConfig.inverted(false)
+    m_shooterRightMotorConfig
+    .inverted(false)
     .idleMode(IdleMode.kBrake)
     .openLoopRampRate(0.0)
     .voltageCompensation(12.8);
     m_shooterRightMotor.configure(m_shooterRightMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    m_shooterLeftMotorConfig.follow(k.SHOOTER.SHOOTER_RIGHT_MOTOR_CANID)
+    m_shooterLeftMotorConfig
     .inverted(true)
     .idleMode(IdleMode.kBrake)
     .openLoopRampRate(0.0)
@@ -49,5 +50,6 @@ public class Shooter extends SubsystemBase {
   public void setSpeed(double _speed) {
     m_speed = _speed * k.ROBOT.MAX_BATTERY_VOLTAGE;
     m_shooterRightMotor.setVoltage(m_speed);
+    m_shooterLeftMotor.setVoltage(m_speed);
   }
 }

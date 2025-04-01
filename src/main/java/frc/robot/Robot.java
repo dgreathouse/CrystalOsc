@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,6 +32,9 @@ public class Robot extends TimedRobot {
   private ClimberDefaultCommand m_climberDefaultCommand = new ClimberDefaultCommand();
   private ShooterDefaultCommand m_shooterDefaultCommand = new ShooterDefaultCommand();
   private SendableChooser<Command> m_autoChooser = new SendableChooser<>();
+  private UsbCamera usbCamera_1 = CameraServer.startAutomaticCapture(0);
+  private UsbCamera usbCamera_2 = CameraServer.startAutomaticCapture(1);
+  private UsbCamera usbCamera_3 = CameraServer.startAutomaticCapture(2);
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -41,9 +46,17 @@ public class Robot extends TimedRobot {
     m_autoChooser.setDefaultOption("Do Nothing", new DoNothing());
     m_autoChooser.addOption("Center", new Center());
     SmartDashboard.putData(m_autoChooser);
+
+    usbCamera_1.setResolution(120, 80);
+    usbCamera_2.setResolution(120, 80);
+    usbCamera_3.setResolution(120, 80);
+    usbCamera_1.setFPS(10);
+    usbCamera_2.setFPS(10);
+    usbCamera_3.setFPS(10);
+
   }
   public void configureButtonBindings() {
-    k.OI.DRIVER_MODE_TOGGLE.onTrue(new InstantCommand(()-> {k.ROBOT.drive.toggleThroughDriveModes();}, k.ROBOT.drive ));
+  //  k.OI.DRIVER_MODE_TOGGLE.onTrue(new InstantCommand(()-> {k.ROBOT.drive.toggleThroughDriveModes();}, k.ROBOT.drive ));
 
   }
   /**

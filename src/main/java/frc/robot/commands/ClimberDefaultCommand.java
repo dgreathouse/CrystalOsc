@@ -21,10 +21,13 @@ public class ClimberDefaultCommand extends Command {
   @Override
   public void execute() {
     if(k.OI.operatorController.getRawButton(k.CLIMBER.CLIMBER_OUT_BUTTON_ID)){
-      k.ROBOT.climber.setVoltage(2.0);
+      k.ROBOT.climber.unlockServo();
+      k.ROBOT.climber.setVoltage(5);
     }else if(k.OI.operatorController.getRawButton(k.CLIMBER.CLIMBER_IN_BUTTON_ID)){
-      k.ROBOT.climber.setVoltage(-2.0);
+      k.ROBOT.climber.unlockServo();
+      k.ROBOT.climber.setVoltage(-5);
     }else{
+      k.ROBOT.climber.lockServo();
       k.ROBOT.climber.setVoltage(0);
     }
   }

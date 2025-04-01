@@ -37,26 +37,28 @@ public class Drivetrain extends SubsystemBase {
   PoseEstimatorThread m_poseEstimatorThread;
 
   public Drivetrain() {
-    m_leftMasterConfig.inverted(false)
+    m_leftMasterConfig
+    .inverted(false)
     .idleMode(IdleMode.kBrake)
     .openLoopRampRate(0.25)
     .voltageCompensation(12.8);
     m_leftMaster.configure(m_leftMasterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    m_leftSlaveConfig.follow(k.DRIVE.LEFT_MASTER_CANID)
-    .inverted(true)
+    m_leftSlaveConfig
+    .inverted(false)
     .idleMode(IdleMode.kBrake)
     .openLoopRampRate(0.25)
     .voltageCompensation(12.8);
     m_leftSlave.configure(m_leftSlaveConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    m_rightMasterConfig.inverted(true)
+    m_rightMasterConfig
+    .inverted(false)
     .idleMode(IdleMode.kBrake)
     .openLoopRampRate(0.25)
     .voltageCompensation(12.8);
     m_rightMaster.configure(m_rightMasterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    m_rightSlaveConfig.follow(k.DRIVE.RIGHT_MASTER_CANID)
+    m_rightSlaveConfig
     .inverted(false)
     .idleMode(IdleMode.kBrake)
     .openLoopRampRate(0.25)
@@ -83,6 +85,7 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Drive/LeftPos", m_leftMaster.getEncoder().getPosition());
     SmartDashboard.putNumber("Drive/RightPos", m_rightMaster.getEncoder().getPosition());
     SmartDashboard.putData("Drive/Field", k.ROBOT.field2d);
+    SmartDashboard.putNumber("Drive/Heading", getHeading());
    
   }
   public double getDistance(){

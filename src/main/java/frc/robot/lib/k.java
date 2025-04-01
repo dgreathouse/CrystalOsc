@@ -4,6 +4,9 @@
 
 package frc.robot.lib;
 
+import com.studica.frc.AHRS;
+import com.studica.frc.AHRS.NavXComType;
+
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
@@ -28,27 +31,28 @@ public class k {
         public static CommandXboxController driverController = new CommandXboxController(driverController_port);
         public static Joystick operatorController = new Joystick(operatorController_port);
 
-        public static final Trigger DRIVER_MODE_TOGGLE = driverController.a();
+       // public static final Trigger DRIVER_MODE_TOGGLE = driverController.y();
         
     }
     public static class ROBOT{
+
+        public static volatile Pose2d pose2d = new Pose2d();
+        public static volatile Field2d field2d = new Field2d();
+        public static AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
+        public static PowerDistribution pd = new PowerDistribution(1,ModuleType.kRev);
+        public static final double MAX_BATTERY_VOLTAGE = 12.8;
         public static Drivetrain drive = new Drivetrain();
         public static Climber climber = new Climber();
         public static Shooter shooter = new Shooter();
-        public static volatile Pose2d pose2d = new Pose2d();
-        public static volatile Field2d field2d = new Field2d();
-        public static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-        public static PowerDistribution pd = new PowerDistribution(1,ModuleType.kRev);
-        public static double MAX_BATTERY_VOLTAGE = 12.8;
     }
     public static class DRIVE{
 
         public static DriverModes driverMode = DriverModes.ARCADE;
 
-        public static final int LEFT_MASTER_CANID = 0;
-        public static final int LEFT_SLAVE_CANID = 1;
-        public static final int RIGHT_MASTER_CANID = 2;
-        public static final int RIGHT_SLAVE_CANID = 3;
+        public static final int LEFT_MASTER_CANID = 1;
+        public static final int LEFT_SLAVE_CANID = 2;
+        public static final int RIGHT_MASTER_CANID = 3;
+        public static final int RIGHT_SLAVE_CANID = 4;
 
         public static final double MOTOR_MAX_RPM = 5700;
         public static final double WHEEL_DIAMETER = 6;
@@ -63,15 +67,16 @@ public class k {
     public static class CLIMBER{
  
         public static final double GEAR_RATIO = 100;
-        public static final double MAX_OUT_POSITION = 100;
-        public static final double MAX_IN_POSITION = -100;
-        public static final int CLIMBER_MOTOR_CANID = 4;
-        public static final int CLIMBER_OUT_BUTTON_ID = 0;
-        public static final int CLIMBER_IN_BUTTON_ID = 1;
+        public static final double MAX_OUT_POSITION = 320;
+        public static final double MAX_IN_POSITION = -250;
+        public static final int CLIMBER_MOTOR_CANID = 9;
+        public static final int CLIMBER_OUT_BUTTON_ID = 7;
+        public static final int CLIMBER_IN_BUTTON_ID = 8;
+        public static final int CLIMBER_SERVO_PWM = 2;
 
     }
     public static class SHOOTER{
-        public static final int SHOOTER_RIGHT_MOTOR_CANID = 5;
-        public static final int SHOOTER_LEFT_MOTOR_CANID = 5;
+        public static final int SHOOTER_RIGHT_MOTOR_CANID = 8;
+        public static final int SHOOTER_LEFT_MOTOR_CANID = 7;
     }
 }

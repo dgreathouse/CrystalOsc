@@ -4,12 +4,16 @@
 
 package frc.robot.subsystems;
 
+import java.security.Policy;
+
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.k;
@@ -17,6 +21,7 @@ import frc.robot.lib.k;
 public class Climber extends SubsystemBase {
   SparkMax m_climberMotor = new SparkMax(k.CLIMBER.CLIMBER_MOTOR_CANID, MotorType.kBrushless);
   SparkMaxConfig m_climberMotorConfig = new SparkMaxConfig();
+  Servo m_climberServo = new Servo(k.CLIMBER.CLIMBER_SERVO_PWM);
 
   public Climber() {
     m_climberMotorConfig.inverted(false)
@@ -25,6 +30,13 @@ public class Climber extends SubsystemBase {
     .voltageCompensation(12.8);
     m_climberMotor.configure(m_climberMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   
+  }
+  public void lockServo(){
+    m_climberServo.set(1);
+  }
+  public void unlockServo(){
+    m_climberServo.set(.7);
+
   }
   public void setVoltage(double _voltage){
     if(getPosition() > k.CLIMBER.MAX_OUT_POSITION && _voltage > 0){

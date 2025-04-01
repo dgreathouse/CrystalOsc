@@ -21,11 +21,18 @@ public class ShooterDefaultCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(k.OI.operatorController.getRawButton(2)){
-      k.ROBOT.shooter.setSpeed(1.0);
-    } else {
-      k.ROBOT.shooter.setSpeed(0.0);
+
+    double speed = 0;
+    if(k.OI.operatorController.getRawButton(1)){
+      speed = 0.1;
+    }else if(k.OI.operatorController.getRawButton(2)){
+      speed = -0.1;
+    }else if(k.OI.operatorController.getRawButton(3)){
+      speed = 0.4;
+    }else if(k.OI.operatorController.getRawButton(4)){
+      speed = -0.4;
     }
+    k.ROBOT.shooter.setSpeed(speed);
   }
 
   // Called once the command ends or is interrupted.

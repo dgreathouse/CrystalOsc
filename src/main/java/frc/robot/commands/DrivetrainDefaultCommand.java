@@ -22,27 +22,26 @@ public class DrivetrainDefaultCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double forward = k.OI.driverController.getLeftY();
-    double rotate = k.OI.driverController.getRightX();
+    double forward = -k.OI.driverController.getRawAxis(1);
+    double rotate = -k.OI.driverController.getRawAxis(2);
 
     forward = squareInput(forward);
     rotate = squareInput(rotate);
 
-    double left = k.OI.driverController.getLeftY();
-    double right = k.OI.driverController.getRightY();
 
-    left = squareInput(left);
-    right = squareInput(right);
+
+    rotate = squareInput(rotate);
+    forward = squareInput(forward);
     
     switch(k.DRIVE.driverMode){
       case ARCADE:
         k.ROBOT.drive.arcadeDrive(forward, rotate);
         break;
       case TANK:
-        k.ROBOT.drive.tankDrive(left, right);
+      //  k.ROBOT.drive.tankDrive(left, right);
         break;
       case CURVATURE:
-        k.ROBOT.drive.curvatureDrive(forward, rotate, true);
+       // k.ROBOT.drive.curvatureDrive(forward, rotate, true);
         break;
       case PID:
         break;
