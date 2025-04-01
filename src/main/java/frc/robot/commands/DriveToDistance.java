@@ -22,7 +22,12 @@ public class DriveToDistance extends Command {
 
   /** Creates a new DriveToDistance. */
   public DriveToDistance(double _distance_in, double _speed, double _timeout) {
+
     addRequirements(k.ROBOT.drive);
+    m_distance_in = _distance_in; // inches
+    m_speed = _speed; // 0.0 to 1.0, this is the max speed we will try to go
+    m_timeout = _timeout; // seconds, how long we will try to reach the target before timing out
+    
   }
 
   // Called when the command is initially scheduled.

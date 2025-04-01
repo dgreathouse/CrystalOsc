@@ -22,16 +22,16 @@ public class DrivetrainDefaultCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double forward = -k.OI.driverController.getRawAxis(1);
-    double rotate = -k.OI.driverController.getRawAxis(2);
+    double forward = k.OI.driverController.getRawAxis(2);
+    double rotate = k.OI.driverController.getRawAxis(1);
 
     forward = squareInput(forward);
     rotate = squareInput(rotate);
 
 
 
-    rotate = squareInput(rotate);
-    forward = squareInput(forward);
+    // rotate = squareInput(rotate);
+    // forward = squareInput(forward);
     
     switch(k.DRIVE.driverMode){
       case ARCADE:

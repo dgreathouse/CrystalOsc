@@ -5,6 +5,7 @@
 package frc.robot.commandGroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.DriveRotate;
 import frc.robot.commands.DriveToDistance;
 import frc.robot.commands.IntakeSpin;
 
@@ -15,9 +16,10 @@ public class Center extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new DriveToDistance(36, .5, 2),
+      new DriveToDistance(1, .5, 2),
       new IntakeSpin(.5, 2),
-      new DriveToDistance(-10, .5, 2)
+      new DriveToDistance(-.5, .5, 2),
+      new DriveRotate(0, 0, 0)
     );
   }
 }

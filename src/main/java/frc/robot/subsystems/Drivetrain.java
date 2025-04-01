@@ -15,6 +15,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.DriverModes;
@@ -26,12 +27,14 @@ public class Drivetrain extends SubsystemBase {
   SparkMax m_rightMaster = new SparkMax(k.DRIVE.RIGHT_MASTER_CANID, MotorType.kBrushless);
   SparkMax m_rightSlave = new SparkMax(k.DRIVE.RIGHT_SLAVE_CANID, MotorType.kBrushless);
   
+  MotorControllerGroup m_leftMotors = new MotorControllerGroup(m_leftMaster, m_leftSlave);
+  MotorControllerGroup m_rightMotors = new MotorControllerGroup(m_rightMaster, m_rightSlave);
   SparkMaxConfig m_leftMasterConfig = new SparkMaxConfig();
   SparkMaxConfig m_leftSlaveConfig = new SparkMaxConfig();
   SparkMaxConfig m_rightMasterConfig = new SparkMaxConfig();
   SparkMaxConfig m_rightSlaveConfig = new SparkMaxConfig();
 
-  public DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftMaster::set, m_rightMaster::set);
+  public DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftMotors::set, m_rightMotors::set);
   DifferentialDrivePoseEstimator m_poseEstimator;
   DifferentialDriveKinematics m_kinematics;
   PoseEstimatorThread m_poseEstimatorThread;
@@ -82,8 +85,8 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Drive/LeftPos", m_leftMaster.getEncoder().getPosition());
-    SmartDashboard.putNumber("Drive/RightPos", m_rightMaster.getEncoder().getPosition());
+    SmartDashboard.putNumber("Drive/LeftPos", getLeftDistance());
+    SmartDashboard.putNumber("Drive/RightPos", getRightDistance());
     SmartDashboard.putData("Drive/Field", k.ROBOT.field2d);
     SmartDashboard.putNumber("Drive/Heading", getHeading());
    
@@ -92,10 +95,10 @@ public class Drivetrain extends SubsystemBase {
     return ((m_leftMaster.getEncoder().getPosition()/k.DRIVE.EncoderRevPerInch) + m_rightMaster.getEncoder().getPosition()/k.DRIVE.EncoderRevPerInch) / 2;
   }
   public double getLeftDistance(){
-    return m_leftMaster.getEncoder().getPosition()/k.DRIVE.EncoderRevPerInch;
+    return  m_leftMaster.getEncoder().getPosition()/17.9;
   }
   public double getRightDistance(){
-    return m_rightMaster.getEncoder().getPosition()/k.DRIVE.EncoderRevPerInch;
+    return -m_rightMaster.getEncoder().getPosition()/17.9;
   }
   public double getLeftVelocity(){
     return m_leftMaster.getEncoder().getVelocity();
